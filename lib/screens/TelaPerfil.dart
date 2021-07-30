@@ -87,7 +87,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
               ),
             ),
             Align(
-              heightFactor: 3.0,
+              heightFactor: 1.8,
               alignment: Alignment.bottomCenter,
               child: Column(
                 children: [
@@ -115,6 +115,20 @@ class _TelaPerfilState extends State<TelaPerfil> {
                             context, _controladorUsuario.usuarioLogado);
                       },
                       title: "Change password",
+                    ),
+                  ),
+                  SizedBox(
+                    height: 14,
+                  ),
+                  Container(
+                    width: 200,
+                    child: BotaoPadrao(
+                      backgroundColor: Colors.blueAccent,
+                      onPressed: () {
+                        UtilDialog.mudarEmail(
+                            context, _controladorUsuario.usuarioLogado);
+                      },
+                      title: "Change email",
                     ),
                   )
                 ],

@@ -116,12 +116,12 @@ abstract class _ControladorFeedBase with Store {
     });
   }
 
-  void comentar(EnviarComentario criador, String idPost, 
+  void comentar(Comentario comentario, String idPost, 
       {Function() sucesso,
       Function() carregando,
       Function(String mensagem) erro}) {
     carregando?.call();
-    service.comentarPostagem(criador, idPost).then((value) {
+    service.comentarPostagem(comentario, idPost).then((value) {
       sucesso?.call();
     }).catchError((onError) {
       erro?.call(onError.response.data["falha:"]);

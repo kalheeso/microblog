@@ -38,7 +38,7 @@ Map<String, dynamic> _$PostagemToJson(Postagem instance) => <String, dynamic>{
 
 Comentario _$ComentarioFromJson(Map<String, dynamic> json) {
   return Comentario(
-    conteudo: json['conteudo'] as String,
+    comentario: json['comentario'] as String,
     id: json['id'] as String,
     criador: json['criador'] == null
         ? null
@@ -51,23 +51,8 @@ Comentario _$ComentarioFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ComentarioToJson(Comentario instance) =>
     <String, dynamic>{
-      'conteudo': instance.conteudo,
+      'comentario': instance.comentario,
       'id': instance.id,
       'dataDoComentario': instance.dataDoComentario?.toIso8601String(),
-      'criador': instance.criador,
-    };
-
-EnviarComentario _$EnviarComentarioFromJson(Map<String, dynamic> json) {
-  return EnviarComentario(
-    comentario: json['comentario'] as String,
-    criador: json['criador'] == null
-        ? null
-        : Usuario.fromJson(json['criador'] as Map<String, dynamic>),
-  );
-}
-
-Map<String, dynamic> _$EnviarComentarioToJson(EnviarComentario instance) =>
-    <String, dynamic>{
-      'comentario': instance.comentario,
       'criador': instance.criador,
     };

@@ -74,16 +74,12 @@ abstract class _ControladorUsuarioBase with Store {
     }
   }
 
-  void mudarSenha(Usuario usuario,
+  void editarUsuario(Usuario usuario,
       {Function() sucesso, Function(String mensagem) erro}) {
-    if (usuario.senha?.isEmpty ?? true) {
-      erro?.call("Invalid password");
-    } else {
-      service.editarUsuario(usuario).then((value) {
-        sucesso?.call();
-      }).catchError((onError) {
-        erro?.call(onError.response.data["falha:"]);
-      });
-    }
+    service.editarUsuario(usuario).then((value) {
+      sucesso?.call();
+    }).catchError((onError) {
+      erro?.call(onError.response.data["falha:"]);
+    });
   }
 }

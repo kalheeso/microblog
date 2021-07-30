@@ -61,7 +61,8 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                           ? () {
                               _controladorFeed.publicarPostagem(
                                   widget.postagemEditar, sucesso: () {
-                                    widget.postagemEditar.comentarios = _listComentarios;
+                                widget.postagemEditar.comentarios =
+                                    _listComentarios;
                                 Navigator.pop(context);
                                 setState(() {});
                                 widget.sucesso();
@@ -71,6 +72,7 @@ class _PostagemWidgetState extends State<PostagemWidget> {
                                     titulo: "Ops", mensagem: mensagem);
                               }, carregando: () {
                                 UtilDialog.showLoading(context);
+                                Navigator.pop(context);
                               });
                             }
                           : null,

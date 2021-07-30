@@ -38,7 +38,7 @@ abstract class ServicoMicroblog {
 
   @POST("/feedMatheus/comentarPost")
   Future<UtilRetornoPostagem> comentarPostagem(
-      @Body() EnviarComentario criador, @Query("id") String id);
+      @Body() Comentario comentario, @Query("id") String id);
 
   @DELETE("/feedMatheus/excluirPostagem")
   Future<String> excluirPostagem(@Query("id") String id);

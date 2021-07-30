@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:microblog/controladores/ControladorFeed.dart';
 import 'package:microblog/controladores/ControladorUsuario.dart';
@@ -164,6 +165,7 @@ class UtilDialog {
   }
 
   static void mudarSenha(BuildContext mainContext, Usuario usuario) {
+    String senha = "";
     ControladorUsuario _controladorUsuario = GetIt.I.get<ControladorUsuario>();
     showDialog(
         context: mainContext,
@@ -177,11 +179,11 @@ class UtilDialog {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("New paword: "),
+                        Text("New password: "),
                         Divider(),
                         TextFieldPadrao(
                           onChanged: (text) {
-                            usuario.senha = text;
+                            senha = text;
                           },
                         ),
                         SizedBox(
@@ -192,29 +194,110 @@ class UtilDialog {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             BotaoPadrao(
-                              backgroundColor: Colors.blue[800],
+                              backgroundColor: Colors.red,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
                               title: "Cancel",
                             ),
                             BotaoPadrao(
-                              backgroundColor: Colors.blue[400],
+                              backgroundColor: Colors.green,
                               onPressed: () {
-                                _controladorUsuario.mudarSenha(usuario,
-                                    sucesso: () {
-                                  Navigator.pop(context);
-                                  exibirInformacao(
-                                    context,
-                                    titulo: "Success",
-                                    mensagem: "The password has been changed",
-                                  );
-                                }, erro: (mensagem) {
-                                  Navigator.pop(context);
-                                  exibirInformacao(context,
-                                      mensagem: "There' been an error",
-                                      titulo: "Sorry");
-                                });
+                                if (senha.isNotEmpty && senha != " ") {
+                                  usuario.senha = senha;
+                                  _controladorUsuario.editarUsuario(usuario,
+                                      sucesso: () {
+                                    Navigator.pop(context);
+                                    exibirInformacao(
+                                      context,
+                                      titulo: "Success",
+                                      mensagem: "The password has been changed",
+                                    );
+                                  }, erro: (mensagem) {
+                                    Navigator.pop(context);
+                                    exibirInformacao(context,
+                                        mensagem: "There' been an error",
+                                        titulo: "Sorry");
+                                  });
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          "Insert a valid password",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 10);
+                                }
+                              },
+                              title: "Confirm",
+                            )
+                          ],
+                        )
+                      ],
+                    ))),
+          );
+        });
+  }
+
+  static void mudarEmail(BuildContext mainContext, Usuario usuario) {
+    String email = "";
+    ControladorUsuario _controladorUsuario = GetIt.I.get<ControladorUsuario>();
+    showDialog(
+        context: mainContext,
+        builder: (context) {
+          return Center(
+            child: Card(
+                margin: EdgeInsets.all(24.0),
+                child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("New user email: "),
+                        Divider(),
+                        TextFieldPadrao(onChanged: (text) {
+                          email = text;
+                        }),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BotaoPadrao(
+                              backgroundColor: Colors.red,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              title: "Cancel",
+                            ),
+                            BotaoPadrao(
+                              backgroundColor: Colors.green,
+                              onPressed: () {
+                                if (email.isNotEmpty && email != " ") {
+                                  usuario.email = email;
+                                  _controladorUsuario.editarUsuario(usuario,
+                                      sucesso: () {
+                                    Navigator.pop(context);
+                                    exibirInformacao(
+                                      context,
+                                      titulo: "Success",
+                                      mensagem: "The email has been changed",
+                                    );
+                                  }, erro: (mensagem) {
+                                    Navigator.pop(context);
+                                    exibirInformacao(context,
+                                        titulo: "Sorry",
+                                        mensagem: "There' been an error");
+                                  });
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Insert a valid email",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 10);
+                                }
                               },
                               title: "Confirm",
                             )
@@ -419,7 +502,7 @@ class UtilDialog {
                         Divider(),
                         TextFieldPadrao(
                           onChanged: (text) {
-                            comentario.conteudo = text;
+                            comentario.comentario = text;
                           },
                         ),
                         SizedBox(
@@ -439,16 +522,16 @@ class UtilDialog {
                             BotaoPadrao(
                               backgroundColor: Colors.green,
                               onPressed: () {
-                                EnviarComentario enviarComentario =
-                                    EnviarComentario(
-                                        criador: comentario.criador);
                                 _controladorFeed.comentar(
-                                    enviarComentario,
-                                    postagem.id, sucesso: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, "/telaPrincipal");
+                                    comentario, postagem.id, sucesso: () {
+                                  UtilDialog.exibirInformacao(context,
+                                      titulo: "Succes",
+                                      mensagem:
+                                          "You commented the post, access the firestore db to check");
                                 }, erro: (mensagem) {
-                                  Navigator.pop(context, "/telaPerfil");
+                                  UtilDialog.exibirInformacao(context,
+                                      titulo: "Error",
+                                      mensagem: "Sorry, something went wrong");
                                 });
                               },
                               title: "Confirm",

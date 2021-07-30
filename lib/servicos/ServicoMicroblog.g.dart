@@ -161,13 +161,13 @@ class _ServicoMicroblog implements ServicoMicroblog {
   }
 
   @override
-  Future<UtilRetornoPostagem> comentarPostagem(criador, id) async {
-    ArgumentError.checkNotNull(criador, 'criador');
+  Future<UtilRetornoPostagem> comentarPostagem(comentario, id) async {
+    ArgumentError.checkNotNull(comentario, 'comentario');
     ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _data = <String, dynamic>{};
-    _data.addAll(criador?.toJson() ?? <String, dynamic>{});
+    _data.addAll(comentario?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
         '/feedMatheus/comentarPost',
         queryParameters: queryParameters,
