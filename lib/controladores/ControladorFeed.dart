@@ -37,7 +37,7 @@ abstract class _ControladorFeedBase with Store {
       postagens.addAll(responseTodosOsPosts.sucesso);
       sucesso?.call();
     }).catchError((onError) {
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 
@@ -70,7 +70,7 @@ abstract class _ControladorFeedBase with Store {
       conteudoPostagem = "";
       sucesso?.call();
     }).catchError((onError) {
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 
@@ -84,7 +84,7 @@ abstract class _ControladorFeedBase with Store {
       sucesso?.call();
     }).catchError((onError) {
       statusConsultaFeed = StatusConsulta.FALHA;
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 
@@ -98,7 +98,7 @@ abstract class _ControladorFeedBase with Store {
       statusConsultaFeed = StatusConsulta.SUCESSO;
       sucesso.call();
     }).catchError((onError) {
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 
@@ -112,7 +112,7 @@ abstract class _ControladorFeedBase with Store {
       statusConsultaFeed = StatusConsulta.SUCESSO;
       sucesso?.call();
     }).catchError((onError) {
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 
@@ -124,7 +124,7 @@ abstract class _ControladorFeedBase with Store {
     service.comentarPostagem(comentario, idPost).then((value) {
       sucesso?.call();
     }).catchError((onError) {
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 }

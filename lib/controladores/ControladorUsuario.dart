@@ -49,7 +49,7 @@ abstract class _ControladorUsuarioBase with Store {
           sucesso?.call();
         });
       }).catchError((onError) {
-        erro?.call(onError.response.data["falha:"]);
+        erro?.call(onError.response.data["falha"]);
       });
     }
   }
@@ -69,7 +69,7 @@ abstract class _ControladorUsuarioBase with Store {
           sucesso?.call();
         });
       }).catchError((onError) {
-        erro?.call(onError.response.data["falha:"]);
+        erro?.call(onError.response.data["falha"]);
       });
     }
   }
@@ -79,7 +79,7 @@ abstract class _ControladorUsuarioBase with Store {
     service.editarUsuario(usuario).then((value) {
       sucesso?.call();
     }).catchError((onError) {
-      erro?.call(onError.response.data["falha:"]);
+      erro?.call(onError.response.data["falha"]);
     });
   }
 }
